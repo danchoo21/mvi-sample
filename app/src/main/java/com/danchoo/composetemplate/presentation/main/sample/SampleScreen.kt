@@ -22,16 +22,13 @@ import kotlinx.coroutines.flow.onEach
 
 /**
  * MVI의 V : View
+ * Statefull composable
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     viewModel: SampleViewModel = viewModel()
 ) {
 
-    /**
-     * viewState 를
-     */
     val viewState = viewModel.viewState.value
 
     /**
@@ -59,10 +56,31 @@ fun MainScreen(
             }.collect()
     }
 
+    SampleScreenImpl(
+        modifier = Modifier,
+        viewState = viewState,
+        onClickButton = {
+            /**
+             * SampleIntent.OnClickButton viewModel에 전달
+             */
+            viewModel.setIntent(SampleIntent.OnClickButton)
+        }
+    )
+}
 
+/**
+ * Stateless composable
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SampleScreenImpl(
+    modifier: Modifier,
+    viewState: SampleContract.SampleViewState,
+    onClickButton: () -> Unit
+) {
     Scaffold { innerPadding ->
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .padding(innerPadding)
                 .fillMaxSize(),
             verticalArrangement = Arrangement.SpaceAround,
@@ -74,10 +92,7 @@ fun MainScreen(
             Text(text = "${viewState.text} ${viewState.count}")
 
             Button(onClick = {
-                /**
-                 * SampleIntent.OnClickButton viewModel에 전달
-                 */
-                viewModel.setIntent(SampleIntent.OnClickButton)
+                onClickButton()
             }) {
                 Text(text = viewState.buttonText)
             }
