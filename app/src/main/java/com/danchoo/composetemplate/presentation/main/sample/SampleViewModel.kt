@@ -31,6 +31,9 @@ class SampleViewModel : ViewModel() {
         }
     }
 
+    /**
+     * 전달 받은 Intent 를 처리
+     */
     private suspend fun handleIntent(intent: SampleIntent) {
         when (intent) {
             is SampleIntent.OnClickButton -> {
@@ -45,6 +48,9 @@ class SampleViewModel : ViewModel() {
         }
     }
 
+    /**
+     * view에서 전달 받은 Intent를 sharedFlow에 전달 해준다.
+     */
     fun setIntent(intent: SampleIntent) {
         viewModelScope.launch {
             _intent.emit(intent)

@@ -20,16 +20,32 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 
 
+/**
+ * MVI의 V : View
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     viewModel: SampleViewModel = viewModel()
 ) {
 
+    /**
+     * viewState 를
+     */
     val viewState = viewModel.viewState.value
 
+    /**
+     * LaunchedEffect key1을 Unit 으로 설정하여 한번만 생성이 되도록 한다.
+     */
     LaunchedEffect(key1 = Unit) {
+        /**
+         * viewState 받아오기 위하여 subscribeToIntent를 호출해 준다.
+         */
         viewModel.subscribeToIntent()
+
+        /**
+         * sideEffect 를 collect 하여 1회성 이벤트를 처리해 준다.
+         */
         viewModel.sideEffect
             .onEach {
                 when (it) {
@@ -56,6 +72,9 @@ fun MainScreen(
             Text(text = viewState.text)
 
             Button(onClick = {
+                /**
+                 * SampleIntent.OnClickButton viewModel에 전달
+                 */
                 viewModel.setIntent(SampleIntent.OnClickButton)
             }) {
                 Text(text = "Button")
