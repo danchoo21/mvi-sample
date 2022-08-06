@@ -23,8 +23,6 @@ class SampleViewModel : ViewModel() {
 
     private val _intent = MutableSharedFlow<SampleIntent>()
 
-    private var count = 0
-
     fun subscribeToIntent() {
         viewModelScope.launch {
             _intent.collect { handleIntent(it) }
@@ -39,8 +37,14 @@ class SampleViewModel : ViewModel() {
             is SampleIntent.OnClickButton -> {
                 _sideEffect.send(SampleSideEffect.CheckButtonClick)
 
-                _viewState.value = viewState.value.copy(
-                    text = "current count ${++count}"
+                /**
+                 * _viewState.value 를 copy 하여 사용한다.
+                 * copy 하여 사용 했을경우
+                 * 변경하지 않는 데이터가 보존된다.
+                 * 또한, Create 하는 것보단 Copy 하는것이 좋다고 한다.
+                 */
+                _viewState.value = _viewState.value.copy(
+                    count = _viewState.value.count + 1
                 )
 
                 _sideEffect.send(SampleSideEffect.ButtonClickComplete("onClick button success"))

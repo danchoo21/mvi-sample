@@ -69,7 +69,9 @@ fun MainScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Text(text = viewState.text)
+            Text(text = viewState.title)
+
+            Text(text = "${viewState.text} ${viewState.count}")
 
             Button(onClick = {
                 /**
@@ -77,7 +79,7 @@ fun MainScreen(
                  */
                 viewModel.setIntent(SampleIntent.OnClickButton)
             }) {
-                Text(text = "Button")
+                Text(text = viewState.buttonText)
             }
         }
     }

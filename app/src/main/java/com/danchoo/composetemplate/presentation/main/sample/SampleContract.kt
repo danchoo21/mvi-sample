@@ -11,7 +11,9 @@ object SampleContract {
      */
     data class SampleViewState(
         val text: String = "Click Button",
-        val dummyState: String = "dummyState"
+        val count: Int = 0,
+        val buttonText: String = "Button",
+        val title: String = "Mvi Sample"
     )
 
     /**
