@@ -5,7 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.danchoo.composetemplate.presentation.main.test.MainScreen
+import com.danchoo.composetemplate.presentation.main.sample.MainScreen
 
 @Composable
 fun MainApp() {
